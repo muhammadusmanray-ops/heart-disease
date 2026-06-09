@@ -1,0 +1,6 @@
+{
+  "name": "Heart Disease Risk Checker",
+  "description": "A beautiful, modern medical dashboard to calculate heart disease risks, featuring a clean crimson dark-mode interface and dynamic forecasting.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
