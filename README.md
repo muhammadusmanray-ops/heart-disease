@@ -1,3 +1,12 @@
+---
+title: Heart Disease Api
+emoji: 🫀
+colorFrom: red
+colorTo: pink
+sdk: docker
+pinned: false
+---
+
 # Heart Disease Risk Intelligence Portal 🫀
 
 An industry-aligned machine learning application that predicts heart disease risk using clinical patient data. The portal integrates a tuned scikit-learn machine learning model, a FastAPI backend, and a modern React + Vite + TypeScript frontend.
