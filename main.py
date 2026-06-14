@@ -3,6 +3,9 @@ import numpy as np
 import pandas as pd
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import FileResponse
+import os
 from pydantic import BaseModel
 
 # 1. FastAPI App initialize karna
@@ -95,6 +98,12 @@ def predict_heart_disease(data: PatientData):
         "risk_percentage": round(prediction_prob * 100)
     }
 
+# 5. Serve React Frontend
+frontend_path = os.path.join(os.path.dirname(__file__), "frontend", "dist")
+
 @app.get("/")
-def read_root():
-    return {"message": "Heart Disease API is running successfully!"}
+def serve_react_app():
+    return FileResponse(os.path.join(frontend_path, "index.html"))
+
+# Catch-all route to serve static files (js, css, assets)
+app.mount("/", StaticFiles(directory=frontend_path), name="static")
