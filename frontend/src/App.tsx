@@ -26,28 +26,28 @@ export default function App() {
   const [apiLogs, setApiLogs] = useState<ApiLogEntry[]>([]);
   const [activeFormValues, setActiveFormValues] = useState<PatientData>(INITIAL_PATIENT_DATA);
 
-  // Ping localhost:8000 on startup to inspect the gateway presence
+  const API_URL = import.meta.env.VITE_API_URL || 'https://muhammadusmanray-ops-heart-disease-api.hf.space';
+
+  // Ping backend on startup
   useEffect(() => {
     const probeGateway = async () => {
       try {
         const controller = new AbortController();
         const timeoutId = setTimeout(() => controller.abort(), 2000);
         
-        // Try testing connection to localhost predictability endpoint or static base
-        const response = await fetch('/predict', {
-          method: 'OPTIONS', // simple CORS preflight probe
+        const response = await fetch(`${API_URL}/predict`, {
+          method: 'OPTIONS',
           signal: controller.signal
         });
         clearTimeout(timeoutId);
         setApiStatus('online');
       } catch (e) {
-        // Safe standard fallback indication inside cloud environments
         setApiStatus('offline');
       }
     };
 
     probeGateway();
-  }, []);
+  }, [API_URL]);
 
   const handlePredictionCheck = async (patientInput: PatientData) => {
     setIsCalculating(true);
@@ -57,7 +57,7 @@ export default function App() {
     
     const rawLogEntry: ApiLogEntry = {
       timestamp: logTimestamp,
-      url: '/predict',
+      url: `${API_URL}/predict`,
       method: 'POST',
       payload: patientInput,
       status: 'pending',
@@ -84,7 +84,7 @@ export default function App() {
 
     try {
       // Direct REST client POST request
-      const response = await fetch('/predict', {
+      const response = await fetch(`${API_URL}/predict`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
