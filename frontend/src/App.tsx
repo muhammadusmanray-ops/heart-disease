@@ -34,7 +34,7 @@ export default function App() {
         const timeoutId = setTimeout(() => controller.abort(), 2000);
         
         // Try testing connection to localhost predictability endpoint or static base
-        const response = await fetch('https://hewjdewjdbqwjdwej-heart-disease-api.hf.space/predict', {
+        const response = await fetch('/predict', {
           method: 'OPTIONS', // simple CORS preflight probe
           signal: controller.signal
         });
@@ -57,7 +57,7 @@ export default function App() {
     
     const rawLogEntry: ApiLogEntry = {
       timestamp: logTimestamp,
-      url: 'https://hewjdewjdbqwjdwej-heart-disease-api.hf.space/predict',
+      url: '/predict',
       method: 'POST',
       payload: patientInput,
       status: 'pending',
@@ -84,7 +84,7 @@ export default function App() {
 
     try {
       // Direct REST client POST request
-      const response = await fetch('https://hewjdewjdbqwjdwej-heart-disease-api.hf.space/predict', {
+      const response = await fetch('/predict', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
